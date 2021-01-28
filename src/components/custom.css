@@ -1,0 +1,50 @@
+.filerobot-image-editor-root {
+  height: 100%;
+}
+
+.MuiOutlinedInput-input {
+  padding: 6px 25px 7px 10px !important;
+}
+
+#input-width-label,
+#input-height-label {
+  color: #a1a1a1;
+  font-size: 16px;
+  font-family: "Poppins";
+}
+
+#input-width,
+#input-height {
+  color: #a1a1a1;
+  font-size: 12px;
+  font-family: "Poppins";
+}
+
+.MuiInputBase-root.MuiInput-root.MuiInput-underline {
+  border: 1px solid #353535;
+  padding: 5px 10px;
+  line-height: 20px;
+  height: 32px;
+}
+
+.upload-box {
+  background-image: url("/assets/images/dropImage.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 13vw;
+  width: 400px;
+  height: 350px;
+  transition: 0.5s ease;
+}
+
+.drag-box {
+  padding: 50px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-upload-list.ant-upload-list-text {
+  display: none;
+}

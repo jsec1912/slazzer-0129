@@ -10,7 +10,7 @@ const Button = withStyles({
   root: {
     textTransform: 'capitalize',
     '&:hover': {
-    
+
     }
   },
   label: {
@@ -36,23 +36,23 @@ const useStyles = makeStyles({
 export default function SaveCancelBox(props) {
   const classes = useStyles();
 
-  const { handleCancel, apply } = props;
+  const { handleCancel, onSave } = props;
   return (
     <div className="d-flex justify-content-end mt-2">
       <Button
         className={classes.cancelBtn}
         startIcon={<Icon name="cancel1" />}
-        onClick={()=>handleCancel()}
-        >
+        onClick={() => handleCancel()}
+      >
         Cancel
       </Button>
       <Button
         className={classes.saveBtn}
         startIcon={<Icon name="check-circle" />}
-        onClick={() => { apply(); }}
-        >
+        onClick={() => onSave()}
+      >
         Save
       </Button>
     </div>
-  )  
+  )
 }

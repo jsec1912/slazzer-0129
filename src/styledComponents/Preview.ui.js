@@ -28,6 +28,7 @@ const PreviewImgBox = styled.div`
   max-width: 100%;
   height: 100%;
   vertical-align: middle;
+  line-height: calc(100% - 260px);
 
   ${props => !props.hideCanvas ? `
   &:before {
@@ -135,7 +136,7 @@ const FocusPoint = styled(
   },
 }));
 
-const FocusPointImg = styled(({visible, ...rest}) => <img {...rest} />)(({visible}) => ({
+const FocusPointImg = styled(({ visible, ...rest }) => <img {...rest} />)(({ visible }) => ({
   visibility: visible ? 'visible' : 'hidden',
   maxWidth: '100%',
   maxHeight: '100%'

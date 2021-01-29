@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 
-import  Upload  from 'antd/lib/upload';
+import Upload from 'antd/lib/upload';
 import axios from 'axios';
 import './custom.css';
-import { Progress } from 'react-sweet-progress';
-import "react-sweet-progress/lib/style.css";
+import Progress from 'antd/lib/progress';
+import 'antd/dist/antd.css';
 
 const { Dragger } = Upload;
 
 export default class extends Component {
   state = {
-  percent : 0
+    percent: 0,
+    showProcessing: false,
+    successing: 'active'
   }
+
   render() {
     const {
       setDropped,
       handleReceivedImg
     } = this.props;
-	
+
     const props = {
       name: 'file',
       multiple: false,
@@ -28,17 +31,6 @@ export default class extends Component {
         fData.append('source_image_file', info.file);
         fData.append('output_image_format', 'base64');
 
-        // const config = {
-         
-          // onUploadProgress: progressEvent => {
-          //   console.log("loaded : ", progressEvent.loaded)
-          //   this.setState({
-          //     percent: Math.floor((ProgressEvent.loaded * 100) / progressEvent.total)
-          //   })
-          //   // let percentCompleted = Math.floor((ProgressEvent.loaded * 100) / ProgressEvent.total);
-          // }
-        
-        console.log('server upload start')
         axios.post(
           url,
           fData,
@@ -52,14 +44,26 @@ export default class extends Component {
               this.setState({
                 percent: Math.floor((progressEvent.loaded * 100) / progressEvent.total)
               })
-              // let percentCompleted = Math.floor((ProgressEvent.loaded * 100) / ProgressEvent.total);
+
+              if (this.state.percent !== 0) {
+                this.setState({
+                  showProcessing: true
+                })
+              }
+
             }
           },
-          )
+        )
           .then((res) => {
-            setDropped()
-            handleReceivedImg(res.data.output_image_base64)
-					
+            this.setState({
+              successing: 'success'
+            })
+
+            setTimeout(() => {
+              setDropped()
+              handleReceivedImg(res.data.output_image_base64)
+            }, 1200);
+
           })
           .catch(errors => console.log(errors.data));
       },
@@ -71,39 +75,18 @@ export default class extends Component {
 
     return (
       <>
-        {console.log("percent :", this.state.percent)}
-			<div className="drag-box">
-        <Dragger {...props}>
-            <div className="upload-box"></div>
-        </Dragger>
-      </div>
-        <Progress
-          theme={
-            {
-              error: {
-                symbol: this.state.percent + '%',
-                trailColor: 'pink',
-                color: 'red'
-              },
-              default: {
-                symbol: this.state.percent + '%',
-                trailColor: 'lightblue',
-                color: 'blue'
-              },
-              active: {
-                symbol: this.state.percent + '%',
-                trailColor: 'yellow',
-                color: 'orange'
-              },
-              success: {
-                symbol: this.state.percent + '%',
-                trailColor: 'lime',
-                color: 'green'
-              }
-            }
-          }
-         />
-        </>
-		);
+        {!this.state.showProcessing ?
+          <div className="drag-box">
+            <Dragger {...props}>
+              <div className="upload-box"></div>
+            </Dragger>
+          </div>
+          :
+          <div className="process-box">
+            <Progress percent={this.state.percent} status={this.state.successing} />
+          </div>
+        }
+      </>
+    );
   }
 }

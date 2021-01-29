@@ -1,4 +1,4 @@
-import React, { Children, Component ,useState,useEffect} from 'react';
+import React, { Children, Component, useState, useEffect } from 'react';
 import { AddWrapper, SettingsWrapper, FieldGroup, FieldCustomLabel } from '../../styledComponents/Shapes.ui';
 import { SaveCancelWrapper } from '../../styledComponents/Common.ui';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -35,12 +35,12 @@ const Slider = withStyles({
     color: '#0075ff',
     padding: 0,
     height: '4px'
-  } 
+  }
 })(MuiSlider)
 
 const TextField = withStyles({
   root: {
-    
+
   }
 })(MuiTextField);
 
@@ -48,7 +48,7 @@ const Button = withStyles({
   root: {
     textTransform: 'capitalize',
     '&:hover': {
-      
+
     }
   },
   label: {
@@ -153,10 +153,10 @@ const useStyles = makeStyles({
 
 export default function Edit(props) {
 
-  const { config, updateState, onRotate, correctionDegree, flipX, flipY, onCorrectionDegree,cropDetails, initialZoom, apply} = props;
+  const { config, updateState, onRotate, correctionDegree, flipX, flipY, onCorrectionDegree, cropDetails, initialZoom, apply } = props;
 
-  const {cropPresets} = config
-  
+  const { cropPresets } = config
+
   const [expanded, setExpanded] = React.useState('');
   const [strengthVal, setStrengthVal] = React.useState(0);
   const [brightVal, setBrightVal] = React.useState(0);
@@ -179,11 +179,16 @@ export default function Edit(props) {
 
   // const [resetInputbtn, setResetInputbtn] = React.useState(true);
 
-   const [timeset, setTimeset] = useState(false)
+  const [timeset, setTimeset] = useState(false)
+
+  const onSave = () => {
+    apply()
+    setExpanded(false)
+  }
 
   const handleCancel = () => {
     setExpanded(false)
-    updateState({activeTab: null})
+    updateState({ activeTab: null })
   }
 
   // useEffect(() => {
@@ -201,7 +206,7 @@ export default function Edit(props) {
     }
   }, [cropDetails])
 
-  const handleChange = (panel) =>(event, newExpanded) => {
+  const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
     updateState({ activeTab: panel })
 
@@ -216,25 +221,25 @@ export default function Edit(props) {
 
   const changeWidth = (event) => {
 
-      window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +event.target.value / initialZoom / window.scaleflexPlugins.zoom });
-    }
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +event.target.value / initialZoom / window.scaleflexPlugins.zoom });
+  }
 
   const changeHeight = (event) => {
-      window.scaleflexPlugins.cropperjs.setCropBoxData({ height: +event.target.value / initialZoom / window.scaleflexPlugins.zoom });
-    }
-  
-    const handleSelectResolution = (event) => {
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ height: +event.target.value / initialZoom / window.scaleflexPlugins.zoom });
+  }
 
-      const obj = JSON.parse(event.target.value);
+  const handleSelectResolution = (event) => {
 
-      const { original: { width = 1, height = 1 }} = props;
-      let value;
+    const obj = JSON.parse(event.target.value);
 
-      value = obj.name === 'original size' ? width / height : obj.value;
-      window.scaleflexPlugins.cropperjs.setAspectRatio(value);
-      setAcpectRatio(obj.value)
-      setActiveRatio(obj.name)
-    }
+    const { original: { width = 1, height = 1 } } = props;
+    let value;
+
+    value = obj.name === 'original size' ? width / height : obj.value;
+    window.scaleflexPlugins.cropperjs.setAspectRatio(value);
+    setAcpectRatio(obj.value)
+    setActiveRatio(obj.name)
+  }
   //Exit Crop Features*************************************
 
 
@@ -260,7 +265,7 @@ export default function Edit(props) {
   }
   //Exit Rotate Features*********************************************
 
-  
+
 
   const handleBrightSliderChange = (event, newValue) => {
     setBrightVal(newValue)
@@ -311,7 +316,7 @@ export default function Edit(props) {
           <Icon name="crop" /><Typography>Crop</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormControl style={{width: '100%', marginBottom: '15px'}}>
+          <FormControl style={{ width: '100%', marginBottom: '15px' }}>
             <Select native variant="outlined" defaultValue="" id="grouped-native-select" onChange={handleSelectResolution}>
 
               {cropPresets.map((obj, index) =>
@@ -320,37 +325,37 @@ export default function Edit(props) {
 
             </Select>
           </FormControl>
-          
+
           <div className="d-flex">
             {timeset &&
               <>
-              <TextField
-              className="mr-3"
-              id="input-width"
-              label="Width(Px)"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              defaultValue={Math.round(cropDetails.width * initialZoom)}
-              onChange={changeWidth}
-            />
-              <TextField
-              id="input-height"
-              label="Height(Px)"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              defaultValue={Math.round(cropDetails.height * initialZoom)}
-              onChange={changeHeight}
-            />
+                <TextField
+                  className="mr-3"
+                  id="input-width"
+                  label="Width(Px)"
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  defaultValue={Math.round(cropDetails.width * initialZoom)}
+                  onChange={changeWidth}
+                />
+                <TextField
+                  id="input-height"
+                  label="Height(Px)"
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  defaultValue={Math.round(cropDetails.height * initialZoom)}
+                  onChange={changeHeight}
+                />
               </>
             }
-            
+
           </div>
           <SaveCancelWrapper>
-            <SaveCancelBox handleCancel={handleCancel} apply={apply}/>
+            <SaveCancelBox handleCancel={handleCancel} onSave={onSave} />
           </SaveCancelWrapper>
 
         </AccordionDetails>
@@ -363,14 +368,14 @@ export default function Edit(props) {
           <div className="d-flex">
             <IconButton className="pl-0" onClick={leftRotate}><Icon name="rotate-ccw" /></IconButton>
             <IconButton onClick={rightRotate}><Icon name="rotate-cw" /></IconButton>
-            <IconButton onClick={()=>onFlip('x')}><Icon name="swap_horizontal_circle" /></IconButton>
-            <IconButton onClick={()=>onFlip('y')}><Icon name="swap_vertical_circle" /></IconButton>
+            <IconButton onClick={() => onFlip('x')}><Icon name="swap_horizontal_circle" /></IconButton>
+            <IconButton onClick={() => onFlip('y')}><Icon name="swap_vertical_circle" /></IconButton>
           </div>
           <div className="d-flex justify-content-between align-items-center mt-2">
             <span>Strength</span>
             <div className="d-flex">
-              <IconButton className="p-0" onClick={()=>setStrengthVal(strengthVal-1)}><Icon name="minus" /></IconButton>
-              <IconButton className="p-0" onClick={()=>setStrengthVal(strengthVal+1)}><Icon name="plus" /></IconButton>
+              <IconButton className="p-0" onClick={() => setStrengthVal(strengthVal - 1)}><Icon name="minus" /></IconButton>
+              <IconButton className="p-0" onClick={() => setStrengthVal(strengthVal + 1)}><Icon name="plus" /></IconButton>
               <span className="ml-3">{strengthVal}<sup className="ml-1">&#9900;</sup></span>
             </div>
           </div>
@@ -396,21 +401,21 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-2">
               <span>Brightness</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setBrightVal(brightVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setBrightVal(brightVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setBrightVal(brightVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setBrightVal(brightVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{brightVal}&#x00025;</span>
               </div>
             </div>
             <div className="px-1">
               <Slider
                 value={brightVal}
-                  onChange={handleBrightSliderChange}
-                  aria-label="input brightness value"
-                  defaultValue={50}
-                  step={1}
-                  min={0}
-                  max={100}
-                />
+                onChange={handleBrightSliderChange}
+                aria-label="input brightness value"
+                defaultValue={50}
+                step={1}
+                min={0}
+                max={100}
+              />
             </div>
           </div>
 
@@ -418,8 +423,8 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-3">
               <span>Contrast</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setContrastVal(contrastVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setContrastVal(contrastVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setContrastVal(contrastVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setContrastVal(contrastVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{contrastVal}&#x00025;</span>
               </div>
             </div>
@@ -440,8 +445,8 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-3">
               <span>Highlights</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setHightlightVal(hightlightVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setHightlightVal(hightlightVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setHightlightVal(hightlightVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setHightlightVal(hightlightVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{hightlightVal}&#x00025;</span>
               </div>
             </div>
@@ -462,8 +467,8 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-3">
               <span>Shadows</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setShadowVal(shadowVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setShadowVal(shadowVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setShadowVal(shadowVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setShadowVal(shadowVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{strengthVal}&#x00025;</span>
               </div>
             </div>
@@ -481,7 +486,7 @@ export default function Edit(props) {
           </div>
 
           <SaveCancelWrapper>
-            <SaveCancelBox handleCancel={handleCancel} apply={apply}/>
+            <SaveCancelBox handleCancel={handleCancel} apply={apply} />
           </SaveCancelWrapper>
 
         </AccordionDetails>
@@ -496,8 +501,8 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-2">
               <span>Hue</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setHueVal(hueVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setHueVal(hueVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setHueVal(hueVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setHueVal(hueVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{hueVal}&#x00025;</span>
               </div>
             </div>
@@ -518,8 +523,8 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-3">
               <span>Saturation</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setSaturationVal(saturationVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setSaturationVal(saturationVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setSaturationVal(saturationVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setSaturationVal(saturationVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{saturationVal}&#x00025;</span>
               </div>
             </div>
@@ -540,8 +545,8 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-3">
               <span>Temperature</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setTemperatureVal(temperatureVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setTemperatureVal(temperatureVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setTemperatureVal(temperatureVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setTemperatureVal(temperatureVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{temperatureVal}&#x00025;</span>
               </div>
             </div>
@@ -574,8 +579,8 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-2">
               <span>Sharpness</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setSharpVal(sharpVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setSharpVal(sharpVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setSharpVal(sharpVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setSharpVal(sharpVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{sharpVal}<sup className="ml-1">&#9900;</sup></span>
               </div>
             </div>
@@ -591,7 +596,7 @@ export default function Edit(props) {
               />
             </div>
           </div>
-          
+
         </AccordionDetails>
       </Accordion>
 
@@ -609,8 +614,8 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-2">
               <span>Brush Size</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setEraseVal(eraseVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setEraseVal(eraseVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setEraseVal(eraseVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setEraseVal(eraseVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{eraseVal}&#x00025;</span>
               </div>
             </div>
@@ -626,7 +631,7 @@ export default function Edit(props) {
               />
             </div>
           </div>
-          
+
         </AccordionDetails>
       </Accordion>
 
@@ -644,8 +649,8 @@ export default function Edit(props) {
             <div className="d-flex justify-content-between align-items-center mt-2">
               <span>Brush Size</span>
               <div className="d-flex">
-                <IconButton className="p-0" onClick={()=>setRestoreVal(restoreVal-1)}><Icon name="minus" /></IconButton>
-                <IconButton className="p-0" onClick={()=>setRestoreVal(restoreVal+1)}><Icon name="plus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setRestoreVal(restoreVal - 1)}><Icon name="minus" /></IconButton>
+                <IconButton className="p-0" onClick={() => setRestoreVal(restoreVal + 1)}><Icon name="plus" /></IconButton>
                 <span className="ml-3">{restoreVal}&#x00025;</span>
               </div>
             </div>
@@ -661,7 +666,7 @@ export default function Edit(props) {
               />
             </div>
           </div>
-          
+
         </AccordionDetails>
       </Accordion>
     </div>

@@ -14,7 +14,7 @@ import { isServerSide } from './utils/is-server-side';
 class ImageEditorWrapper extends Component {
   _isMounted = false;
 
-  constructor({ show = false, src = '', config = {} }) {
+  constructor({ show = true, src = '', config = {} }) {
     super();
 
     config.translations = config.translations || {};
@@ -25,7 +25,6 @@ class ImageEditorWrapper extends Component {
     config.colorScheme = config.colorScheme || 'dark';
     config.platform = config.platform || 'filerobot';
     const isCustomColorScheme = typeof config.colorScheme === 'object';
-
     this.state = {
       isVisible: show,
       config: this.processConfig(config),
@@ -57,16 +56,13 @@ class ImageEditorWrapper extends Component {
     this._isMounted = false;
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.show !== prevProps.show) {
-  //     if (this.props.show) { this.open(this.props.src); } else { this.close(); }
-  //   }
-  // }
-  // componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
    
-  //  this.open(this.props.src);
+    if (this.props.src !== prevProps.src) {
+      this.setState({ src: this.props.src });
+    }
 
-  // }
+  } 
 
   processConfig = (config) => {
     const processWithCloudService = config.processWithCloudimage;
@@ -83,28 +79,24 @@ class ImageEditorWrapper extends Component {
     };
   }
 
-  // open = (src) => {
-  //   const { onOpen } = this.props;
+  open = () => {
+    const { onOpen } = this.props;
 
-  //   if (this._isMounted) {
-  //     this.setState({ isVisible: true, src }, () => {
-  //       if (onOpen) onOpen();
-  //     });
-  //   }
-  // }
+    if (this._isMounted) {
+      this.setState({ isVisible: true }, () => {
+        if (onOpen) onOpen();
+      });
+    }
+  }
 
 
   render() {
     const { isVisible, config, t, theme } = this.state;
-    const { onComplete = () => {}, onBeforeComplete, closeOnLoad, handleReceivedImg,src } = this.props;
+    const { onComplete = () => {}, onBeforeComplete, closeOnLoad, handleReceivedImg, src } = this.props;
     const { showInModal = true } = config;
-
     if (!isVisible || isServerSide) return null;
-
     if(src instanceof Blob && config.processWithCloudimage) return null;
-
-    console.log("display")
-
+    
     const Inner = (
       <Container>
         <ImageEditor

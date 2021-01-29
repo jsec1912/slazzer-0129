@@ -183,6 +183,7 @@ export default function Edit(props) {
 
   const handleCancel = () => {
     setExpanded(false)
+    updateState({activeTab: null})
   }
 
   // useEffect(() => {
@@ -190,14 +191,13 @@ export default function Edit(props) {
   //     setInputWidth(Math.round(cropDetails.width * initialZoom))
   //     setInputHeight(Math.round(cropDetails.height * initialZoom))
 
-  //     console.log("welcome")
   //   }
   // }, [timeset])
 
   useEffect(() => {
     if (timeset) {
-       document.getElementById("input-width").value = Math.round(cropDetails.width * initialZoom)
-      document.getElementById("input-height").value = Math.round(cropDetails.height * initialZoom)
+      //  document.getElementById("input-width").value = Math.round(cropDetails.width * initialZoom)
+      // document.getElementById("input-height").value = Math.round(cropDetails.height * initialZoom)
     }
   }, [cropDetails])
 
@@ -215,8 +215,7 @@ export default function Edit(props) {
   //Crop Features Implementation***************************
 
   const changeWidth = (event) => {
-    console.log("change")
-      //setInputValWidth(event.target.value)
+
       window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +event.target.value / initialZoom / window.scaleflexPlugins.zoom });
     }
 
@@ -304,7 +303,7 @@ export default function Edit(props) {
   }
 
 
-  
+  console.log("cropdetrails : ", cropDetails)
   return (
     <div className="">
       <Accordion square expanded={expanded === 'crop'} onChange={handleChange('crop')}>
@@ -326,26 +325,24 @@ export default function Edit(props) {
             {timeset &&
               <>
               <TextField
-         type="text" pattern="[0-9]*"
               className="mr-3"
               id="input-width"
               label="Width(Px)"
-            
+              type="number"
               InputLabelProps={{
                 shrink: true,
               }}
-              value={Math.round(cropDetails.width * initialZoom)}
+              defaultValue={Math.round(cropDetails.width * initialZoom)}
               onChange={changeWidth}
             />
               <TextField
-               
               id="input-height"
               label="Height(Px)"
               type="number"
               InputLabelProps={{
                 shrink: true,
               }}
-              value={Math.round(cropDetails.height * initialZoom)}
+              defaultValue={Math.round(cropDetails.height * initialZoom)}
               onChange={changeHeight}
             />
               </>

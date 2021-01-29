@@ -11,8 +11,6 @@
     "cropperjs": "^1.5.5",
     "image-type": "^4.1.0",
     "js-sha1": "^0.6.0",
-    "react-dropzone": "^11.2.4",
-    "react-dropzone-uploader": "^2.11.0",
     "react-perfect-scrollbar": "^1.5.8",
     "styled-components": "^4.4.0",
     "throttle-debounce": "^2.1.0",

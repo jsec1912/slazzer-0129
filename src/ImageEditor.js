@@ -31,7 +31,7 @@ export default class extends Component {
   _isMounted = false;
 
   constructor(props) {
-    super();
+    super(props);
 
     const {
       processWithCloudimage, processWithFilerobot, processWithCloudService, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit,
@@ -39,6 +39,7 @@ export default class extends Component {
     } = props.config;
 
     this.state = {
+      src: this.props.src,
       isShowSpinner: true,
       isHideCanvas: false,
       activeTab: null,
@@ -80,13 +81,18 @@ export default class extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    // const { src } = this.props;
-    // if (src) { this.loadImage(); }
+    this.loadImage();
     this.determineImageType();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.src != prevProps.src) {
+      this.loadImage();  
+    }
   }
 
   loadImage = () => {
@@ -568,10 +574,10 @@ export default class extends Component {
               {!isDropped ?
                 <DragImageBox {...dropImgProps}/>
                 :
-                <div onChange={ src ? this.loadImage() : null}>
+                <>
                   {activeBody === 'preview' && <Preview {...previewProps}/>}
-                  {activeBody === 'preResize' && <PreResize {...previewProps}/>}
-                </div>
+                  {activeBody === 'preResize' && <PreResize {...previewProps} />}
+                </>
               }
               
             </WorkareaWrapper>

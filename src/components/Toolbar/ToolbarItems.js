@@ -42,11 +42,12 @@ export default class extends Component {
           <span>
             <Icon name="circle-with-cross" />
           </span>
-        </SpanIcon> 
-       
-          <PerfectScrollbar>
-            {activeTool === 'Edit' && <Edit {...this.props}/>}
-            {/* {activeTab === 'effects' && <Effects {...this.props}/>}
+        </SpanIcon>
+
+        <PerfectScrollbar>
+          {activeTool === 'Edit' && <Edit {...this.props} />}
+          {activeTool === 'Text' && <Text {...this.props} />}
+          {/* {activeTab === 'effects' && <Effects {...this.props}/>}
             {activeTab === 'filters' && <Filters {...this.props}/>}
             {activeTab === 'rotate' && <Orientation {...this.props}/>}
             {activeTab === 'crop' && <Crop {...this.props}/>}
@@ -56,10 +57,10 @@ export default class extends Component {
             {activeTab === 'shapes' && <Shapes {...this.props}/>}
             {activeTab === 'image' && <Image {...this.props}/>}
             {activeTab === 'text' && <Text {...this.props}/>} */}
-            {(isShowSpinner) && <NoClickOverlay/>}
-            {activeBody !== 'preview' && <NoClickToolbar />}
-          </PerfectScrollbar>
-        </div>
+          {/* {(isShowSpinner) && <NoClickOverlay />}
+          {activeBody !== 'preview' && <NoClickToolbar />} */}
+        </PerfectScrollbar>
+      </div>
     )
   }
 }

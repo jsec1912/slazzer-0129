@@ -1,24 +1,58 @@
 import React, { Component } from 'react';
-import { AddWrapper, SettingsWrapper, FieldGroup, FieldCustomLabel } from '../../styledComponents/Shapes.ui';
+import { AddWrapper, SettingsWrapper, FieldGroup, FieldCustomLabel, TextPropertyWrapper } from '../../styledComponents/Shapes.ui';
 import { FieldInput } from '../../styledComponents';
 import Range from '../Range';
-import Select from '../Shared/Select';
+import Input from 'antd/lib/input';
+import Select from 'antd/lib/select';
+import { Row, Col } from 'antd';
+import { TEXT_OPTIONS } from '../../config';
+// import { SketchPicker } from 'react-color';
+
+import { ColorPicker } from 'material-ui-color';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const { Option } = Select;
 
 export default class Text extends Component {
-  componentDidMount() {
-    const { shapeOperations } = this.props;
+  // componentDidMount() {
+  //   const { shapeOperations } = this.props;
 
-    shapeOperations.addText();
+  //   shapeOperations.addText();
+  // }
+
+  // updateOpacity = (newVal) => this.props.shapeOperations.updateShape({ opacity: newVal });
+
+  // updateStroke = (property, value) => {
+  //   const { shapeOperations, selectedShape: { stroke = {} } } = this.props;
+  //   shapeOperations.updateShape({ stroke: { ...stroke, [property]: value }});
+  // }
+
+  // updatePropertyFromEvent = (e) => this.props.shapeOperations.updateShape({ [e.target.name]: e.target.value });
+
+  state = {
+    displayColorPicker: false,
+    color: {
+      r: '241',
+      g: '112',
+      b: '19',
+      a: '1',
+    }
   }
 
-  updateOpacity = (newVal) => this.props.shapeOperations.updateShape({ opacity: newVal });
+  handleClick = () => {
+    console.log("clicked")
+    this.setState({
+      displayColorPicker: !this.state.displayColorPicker
+    })
+  };
 
-  updateStroke = (property, value) => {
-    const { shapeOperations, selectedShape: { stroke = {} } } = this.props;
-    shapeOperations.updateShape({ stroke: { ...stroke, [property]: value }});
-  }
+  handleClose = () => {
+    this.setState({ displayColorPicker: false })
+  };
 
-  updatePropertyFromEvent = (e) => this.props.shapeOperations.updateShape({ [e.target.name]: e.target.value });
+  handleChange = (color) => {
+    this.setState({ color: color.rgb })
+  };
 
   render() {
     const { t, selectedShape = {}, config: { theme } } = this.props;
@@ -27,87 +61,96 @@ export default class Text extends Component {
       textFont = 'Arial',
       textSize = 62,
       stroke = {},
-      color = '#000000',
+      // color = '#000000',
       opacity = 1
     } = selectedShape;
+
+    const { displayColorPicker, color } = this.state
+    console.log("optins : ", TEXT_OPTIONS)
+
+    const background = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
     return (
       <AddWrapper>
         <SettingsWrapper>
-          <FieldGroup>
-            <FieldCustomLabel>Text</FieldCustomLabel>
-            <FieldInput
-              id="text"
-              value={text}
-              name="text"
-              style={{ minWidth: 111 }}
-              onChange={this.updatePropertyFromEvent}
-            />
-          </FieldGroup>
-          <FieldGroup>
-            <FieldCustomLabel>Font family</FieldCustomLabel>
-            <Select
-                list={theme.fonts}
-                valueProp="value"
-                id="textFont"
-                value={textFont}
-                style={{ width: 111 }}
-                onChange={(value) => this.updatePropertyFromEvent({ target: { name: 'textFont', value }})}
-                color="text-font"
-                notRelativePosition
-              />
-          </FieldGroup>
-          <FieldGroup>
-          <FieldCustomLabel>Font size</FieldCustomLabel>
-            <FieldInput
-              value={textSize}
-              type="number"
-              style={{ width: 60 }}
-              name="textSize"
-              onChange={this.updatePropertyFromEvent}
-              min={0}
-            />
-          </FieldGroup>
-          <FieldGroup>
-            <FieldCustomLabel>Fill Color</FieldCustomLabel>
-            <FieldInput
-              value={color}
-              type="color"
-              style={{ width: 30, padding: 0, background: 'transparent', boxShadow: 'none' }}
-              name="color"
-              onChange={this.updatePropertyFromEvent}
-            />
-          </FieldGroup>
-          <Range
-            label={t['common.opacity']}
-            min={0}
-            max={1}
-            step={0.05}
-            range={opacity}
-            updateRange={this.updateOpacity}
-            labelBefore={true}
+          <FieldInput
+            id="text"
+            value={text}
+            name="text"
+            fullSize
+            placeholder="Enter Text"
+            style={{ minWidth: 111 }}
+          // onChange={this.updatePropertyFromEvent}
           />
-          <FieldGroup>
-            <FieldCustomLabel>Stroke Color</FieldCustomLabel>
-            <FieldInput
-              value={stroke.color || '#000000'}
-              type="color"
-              style={{ width: 30, padding: 0, background: 'transparent', boxShadow: 'none' }}
-              onChange={({ target: { value } }) => this.updateStroke('color', value)}
-            />
-          </FieldGroup>
-          <FieldGroup>
-            <FieldCustomLabel>Stroke width</FieldCustomLabel>
-            <FieldInput
-              value={stroke.width || 0}
-              type="number"
-              style={{ width: 60 }}
-              onChange={({ target: { value } }) => this.updateStroke('width', value)}
-              min={0}
-            />
-          </FieldGroup>
+          <TextPropertyWrapper>
+            <div className="text-proper-title">
+              text properties
+            </div>
+            <Select defaultValue="open sans" className="mb-2" style={{ textTransform: 'capitalize', width: '100%' }}>
+              {TEXT_OPTIONS.FONT_FAMILY.map(f_family =>
+                <Option value={f_family}>{f_family}</Option>
+              )}
+            </Select>
+
+            <Row className="mb-2">
+              <Col span={12}>
+                <Select defaultValue="font size" style={{ textTransform: 'capitalize', width: '100%' }}>
+                  {TEXT_OPTIONS.FONT_LINEHEIGHT_SIZE.map(f_size =>
+                    <Option value={f_size}>{f_size}</Option>
+                  )}
+                </Select>
+              </Col>
+              <Col span={12}>
+                <Select defaultValue="line height" style={{ paddingLeft: '0.5rem', textTransform: 'capitalize', width: '100%' }}>
+                  {TEXT_OPTIONS.FONT_LINEHEIGHT_SIZE.map(f_lineheight =>
+                    <Option value={f_lineheight}>{f_lineheight}</Option>
+                  )}
+                </Select>
+              </Col>
+            </Row>
+            <Row className="mb-2">
+              <Col span={12}>
+                <Select defaultValue="medium" style={{ textTransform: 'capitalize', width: '100%' }}>
+                  {TEXT_OPTIONS.FONT_REGULAR.map(f_regular =>
+                    <Option value={f_regular}>{f_regular}</Option>
+                  )}
+                </Select>
+              </Col>
+              <Col span={12}>
+                <Select defaultValue="smooth" style={{ paddingLeft: '0.5rem', textTransform: 'capitalize', width: '100%' }}>
+                  {TEXT_OPTIONS.FONT_SMOOTHING.map(f_smoothing =>
+                    <Option value={f_smoothing}>{f_smoothing}</Option>
+                  )}
+                </Select>
+              </Col>
+            </Row>
+            {/* <ColorPicker value={color} onChange={this.handleChange} hideTextfield /> */}
+            <Row>
+              <Col span={12}>
+                <input type="color" ></input>
+              </Col>
+            </Row>
+
+
+
+          </TextPropertyWrapper>
+
+
+          {/* <Row>
+            <Col span={12}>
+              <div className="cp-swatch" onClick={this.handleClick}>
+                <div className="cp-color"
+                  style={{ backgroundColor: background }} />
+              </div>
+              {displayColorPicker ? <div className="cp-popover">
+                <div className="cp-cover" onClick={this.handleClose} />
+                <SketchPicker color={color} onChange={this.handleChange} />
+              </div> : null}
+            </Col>
+          </Row> */}
+
         </SettingsWrapper>
-      </AddWrapper>
+      </AddWrapper >
     )
   }
 }

@@ -90,3 +90,13 @@
 .ant-progress-text .anticon {
   font-size: 20px!important;
 }
+
+.text-proper-title {
+  text-transform: uppercase;
+  color: #bbb;
+  font-size: large;
+  font-size: 13px;
+  line-height: 20px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}

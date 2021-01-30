@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
 import {
-  HeaderWrapper, HeaderTop, Title, ButtonsWrapper, ToolbarWrapper, CancelBtn, CloseBtn,LogoImgWrapper,SelectScreenWrapper
+  HeaderWrapper, HeaderTop, Title, ButtonsWrapper, ToolbarWrapper, CancelBtn, CloseBtn, LogoImgWrapper, SelectScreenWrapper
 } from '../../styledComponents';
 import { Toolbar } from '../';
-import { ON_CLOSE_STATUSES } from '../../config';
+import { ON_CLOSE_STATUSES, RESOLUTIONS } from '../../config';
 import MuiButton from '@material-ui/core/Button';
 import Icon from '../icon/Icon';
 import { withStyles } from '@material-ui/core/styles';
+import { Select } from 'antd';
 
-
-
-
+const { Option } = Select;
 export default class extends Component {
-  
+
   render() {
     const {
       activeTab, onRevert, apply, onClose, processWithCloudService, processWithFilerobot,
       handleSave, t, config
     } = this.props;
     const applyAndSave = () => { apply(handleSave); };
+
+    const resolutions = RESOLUTIONS;
 
     const Button = withStyles({
       root: {
@@ -45,47 +46,32 @@ export default class extends Component {
             <a href="#"><img src="assets/images/white-logo.png"></img></a>
           </LogoImgWrapper>
           <SelectScreenWrapper>
-            <span className="text-capitalize mr-1">Popular Format</span>
-            
+            <span className="resolution-title">Popular Format</span>
+            <Select defaultValue="Select Custom Size" style={{ width: '220px', color: '#a1a1a1' }}>
+              {resolutions.map(obj =>
+                <Option value={obj}>{obj}</Option>
+              )}
+            </Select>
           </SelectScreenWrapper>
           <ButtonsWrapper>
             <Button
               className="text-white mr-2"
               variant="outlined"
               onClick={() => { }}
-              >
+            >
               Change API Key
-            </Button> 
+            </Button>
             <Button
               variant="contained"
               className="bg-danger text-white"
-              style={{border: '1px solid #dc3545'}}
+              style={{ border: '1px solid #dc3545' }}
               startIcon={<Icon name="upload" />}
-              onClick={()=>{}}
-              >
+              onClick={() => { }}
+            >
               Upload Image
             </Button>
           </ButtonsWrapper>
-          {/* <ButtonsWrapper>
-            <CancelBtn
-              hide={!activeTab}
-              onClick={isOneTool ? cancelBtnClosingFn : onRevert}
-              noCapitalStrs={noCapitalStrs}
-              sm default fullSize
-            >
-              {t[`toolbar.cancel`]}
-            </CancelBtn>
-            <Button
-              themeColor
-              sm
-              success={!activeTab || activeTab === 'resize'}
-              themeBtn={activeTab}
-              onClick={isOneTool ? applyAndSave : !activeTab ? () => { handleSave(); } : () => { apply(); }}
-            >
-              {!activeTab || activeTab === 'resize' ? onFinishButtonLabel : t['toolbar.apply']}
-            </Button>
-          </ButtonsWrapper> */}
-    
+
         </HeaderTop>
 
         {/* <ToolbarWrapper overlayYHidden={activeTab !== 'watermark'}>

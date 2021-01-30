@@ -90,6 +90,37 @@ const WATERMARK_POSITIONS_PRESET = {
   ],
 };
 
+const RESOLUTIONS = [
+  "Select custom Size",
+  "Facebook 1080 x 1080px",
+  "Facebook 1200 x 628px",
+  "Facebook 1640 x 856px",
+  "Facebook 1702 x 630px",
+  "Facebook 1200 x 1200px",
+  "Facebook 360 x 360px",
+  "Facebook 1080 x 1920px",
+  "YouTube 2560 x 1440px",
+  "YouTube 800 x 800px",
+  "YouTube 300 x 250px",
+  "YouTube 300 x 60px",
+  "YouTube 480 x 70px",
+  "YouTube 1280 x 720px",
+  "Instagram 420 x 654px",
+  "Instagram 1080 x 566px",
+  "Instagram 1080 x 1350px",
+  "Instagram 360 x 360px",
+  "Pinterest 1000 x 1500px",
+  "Pinterest 1000 x 1000px",
+  "LinkedIn 1536 x 768px",
+  "LinkedIn 1584 x 396px",
+  "LinkedIn 1400 x 800px",
+  "LinkedIn 400 x 400px",
+  "LinkedIn 1200 x 627px",
+  "Twitter 1500 x 500px",
+  "Twitter 800 x 320px",
+  "Twitter 1024 x 512px"
+]
+
 export const DEFAULT_WATERMARK = {
   opacity: 0.7,
   position: 'center',
@@ -223,6 +254,21 @@ const SAVE_MODES = {
   REPLACE: 'replace'
 }
 
+const TEXT_OPTIONS = {
+  FONT_FAMILY: [
+    "open sans", "lato", "poppins"
+  ],
+  FONT_LINEHEIGHT_SIZE: [
+    "6px", "8px", "10px"
+  ],
+  FONT_SMOOTHING: [
+    "sharp", "strong", "smooth"
+  ],
+  FONT_REGULAR: [
+    "regular", "medium", "bold"
+  ]
+}
+
 export {
   MODAL_ID,
   PREVIEW_CANVAS_ID,
@@ -244,5 +290,7 @@ export {
   SAVE_MODES,
   CONTAINER_SELECTOR,
   NAVBAR_TOOLS,
-  EDIT_TOOLS
+  EDIT_TOOLS,
+  TEXT_OPTIONS,
+  RESOLUTIONS
 };

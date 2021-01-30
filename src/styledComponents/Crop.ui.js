@@ -55,13 +55,10 @@ const FieldInput = styled.input.attrs(props => ({
   padding: 6px 12px;
   font-size: 12px;
   line-height: 30px;
-  color: ${p => p.theme.colors.text};
-  background: ${props => props.theme.colors.primaryBg};
-  border-radius: 2px;
+  background: transparent;
   transition: border-color 0.15s ease-in-out;
   vertical-align: middle;
-  font-family: Roboto, sans-serif;
-  border: 1px solid ${props => props.theme.colors.border};
+  border: 1px solid #262626;
   
   ${p => p.type === 'number' && `::-webkit-inner-spin-button {
     -webkit-appearance: none;

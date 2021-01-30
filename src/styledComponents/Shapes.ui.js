@@ -6,6 +6,35 @@ const AddWrapper = styled.div`
   height: 100%;
 `;
 
+const TextPropertyWrapper = styled.div`
+  text-align: left;
+  width: 100%;
+  padding: 0 2px;
+
+  .text-proper-title {
+    text-transform: uppercase;
+    color: #bbb;
+    font-size: large;
+    font-size: 13px;
+    line-height: 20px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+  }
+
+  .ant-select-selector {
+    background: transparent;
+    border-color: #262626;
+    color: #a1a1a1;
+    font-size: 12px;
+  }
+
+  input {
+    height: 30px;
+    width: 100%;
+    background-color: #3a88fe;
+  }
+`;
+
 const ItemsWrapper = styled.div`
   color: ${props => props.theme.colors.text};
   display: flex;
@@ -37,12 +66,12 @@ const ItemsWrapper = styled.div`
 
 const SettingsWrapper = styled.div`
   height: 100%;
-  padding: 0 15px;
+  flex-direction: column;
   display: flex;
+  margin-top: 5px;
   align-items: center;
   justify-content: center;
-  width: fit-content;
-  margin: 0 auto;
+  width: 100%;
 `;
 
 const ItemGroup = styled.div`
@@ -79,7 +108,8 @@ const FieldGroup = styled.div`
   flex-direction: column;
   jutifyContent: center;
   alignItems: center;
-  margin: 20px;
+  margin-bottom: 10px;
+  width: 100%;
 
   input {
     margin-left: auto;
@@ -88,11 +118,16 @@ const FieldGroup = styled.div`
 `;
 
 const FieldCustomLabel = styled.label`
-  color: ${props => props.theme.colors.text || '#ffffff'};
+  color: #bbb;
   display: inline-block;
   margin-bottom: 0;
+  text-transform: uppercase;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  line-height: 20px;
 `;
 
 export {
-  AddWrapper, ItemsWrapper, SettingsWrapper, ItemGroup, ItemIcon, FieldCustomLabel, FieldGroup,
+  AddWrapper, ItemsWrapper, SettingsWrapper, ItemGroup, ItemIcon, FieldCustomLabel, FieldGroup, TextPropertyWrapper
 };

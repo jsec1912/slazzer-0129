@@ -7,6 +7,7 @@ import './lib/caman';
 import { DEFAULT_WATERMARK, ON_CLOSE_STATUSES } from './config';
 // NAVBAR_TOOLS
 import { getCanvasNode } from './utils';
+import { Select } from 'antd';
 
 
 const INITIAL_PARAMS = {
@@ -69,7 +70,7 @@ export default class extends Component {
 
       ...INITIAL_PARAMS,
       watermark: watermark || DEFAULT_WATERMARK,
-      focusPoint: {x: null, y: null},
+      focusPoint: { x: null, y: null },
       shapes: [],
       selectedShape: {},
       availableShapes: [],
@@ -91,7 +92,7 @@ export default class extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.src != prevProps.src) {
-      this.loadImage();  
+      this.loadImage();
     }
   }
 
@@ -116,7 +117,7 @@ export default class extends Component {
     img.src = src;
     if (!src.startsWith('data:image/') && !src.startsWith('blob:')) {
       // Image is not a blob, insert query param to avoid caching
-      img.src = img.src + (img.src.indexOf('?') > -1 ? '&version='  : '?version=') + new Date().getTime();
+      img.src = img.src + (img.src.indexOf('?') > -1 ? '&version=' : '?version=') + new Date().getTime();
     }
 
     img.onload = () => {
@@ -192,7 +193,7 @@ export default class extends Component {
     xhr.send();
   }
 
-  updateState = (props, callback = () => {}) => {
+  updateState = (props, callback = () => { }) => {
     if (this._isMounted) {
       const editorWrapperId = this.props.config.elementId;
       const canvas = getCanvasNode(editorWrapperId);
@@ -207,11 +208,11 @@ export default class extends Component {
 
   selectedTool = (val) => {
     this.setState({ activeTool: val })
-    this.setState({activeToolItems: true})
+    this.setState({ activeToolItems: true })
   }
 
   isActiveToolbox = () => {
-    this.setState({activeToolItems: false})
+    this.setState({ activeToolItems: false })
   }
 
   onRevert = () => {
@@ -237,7 +238,7 @@ export default class extends Component {
   }
 
   onCorrectionDegree = (val) => {
-    this.setState({correctionDegree: val})
+    this.setState({ correctionDegree: val })
   }
 
   onFlip = (axis) => {
@@ -319,7 +320,7 @@ export default class extends Component {
     this.setState({ activeTab: null });
   }
 
-  redoOperation = ({ operationIndex, callback = () => {}, resetActiveTab = true, operationObject = {} }) => {
+  redoOperation = ({ operationIndex, callback = () => { }, resetActiveTab = true, operationObject = {} }) => {
     const { applyOperations } = this.state;
 
     if (resetActiveTab) {
@@ -376,12 +377,6 @@ export default class extends Component {
     }
   }
 
-  // setDropped = () => {
-  //   this.setState({
-  //     isDropped: true
-  //   })
-  // }
-
   render() {
     const {
       isShowSpinner, activeTab, operations, operationsOriginal, operationsZoomed, currentOperation, isHideCanvas,
@@ -412,7 +407,7 @@ export default class extends Component {
       isDropped
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, t = {}, theme, handleReceivedImg } = this.props;
-   
+
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
     const toolbarProps = {
       activeTab,
@@ -420,7 +415,7 @@ export default class extends Component {
       activeBody,
       config,
       selectedTool: this.selectedTool,
-  
+
     };
 
     const headerProps = {
@@ -555,41 +550,41 @@ export default class extends Component {
 
     const dropImgProps = {
       handleReceivedImg,
-      setDropped: ()=>{this.setState({isDropped: true})}
+      setDropped: () => { this.setState({ isDropped: true }) }
     }
-    
+
     return (
       <Wrapper roundCrop={roundCrop} isLoading={isShowSpinner}>
 
-        <Header {...headerProps}/>
+        <Header {...headerProps} />
 
         <PreviewWrapper>
 
           <ToolbarWrapper>
-            <Toolbar {...toolbarProps}/>
+            <Toolbar {...toolbarProps} />
           </ToolbarWrapper>
           <div className="d-flex w-100">
             <WorkareaWrapper activeToolItems={activeToolItems}>
-              
+
               {!isDropped ?
-                <DragImageBox {...dropImgProps}/>
+                <DragImageBox {...dropImgProps} />
                 :
                 <>
-                  {activeBody === 'preview' && <Preview {...previewProps}/>}
+                  {activeBody === 'preview' && <Preview {...previewProps} />}
                   {activeBody === 'preResize' && <PreResize {...previewProps} />}
                 </>
               }
-              
+
             </WorkareaWrapper>
             {activeToolItems &&
               <ToolbaritemsWrapper>
-                <ToolbarItems {...toolbarItemsProps}/>
+                <ToolbarItems {...toolbarItemsProps} />
               </ToolbaritemsWrapper>
             }
           </div>
           {/* <Spinner overlay show={isShowSpinner} label={t['spinner.label']}/> */}
         </PreviewWrapper>
-        <Footer {...footerProps}/>
+        <Footer {...footerProps} />
 
       </Wrapper>
     )

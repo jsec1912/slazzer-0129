@@ -13,7 +13,8 @@ import MuiSlider from '@material-ui/core/Slider';
 import Icon from '../icon/Icon';
 import FormControl from '@material-ui/core/FormControl';
 import MuiSelect from '@material-ui/core/Select';
-import MuiTextField from '@material-ui/core/TextField';
+// import MuiTextField from '@material-ui/core/TextField';
+import { InputNumber } from 'antd';
 import SaveCancelBox from './SaveCancelBox';
 import '../custom.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -38,11 +39,11 @@ const Slider = withStyles({
   }
 })(MuiSlider)
 
-const TextField = withStyles({
-  root: {
+// const TextField = withStyles({
+//   root: {
 
-  }
-})(MuiTextField);
+//   }
+// })(MuiTextField);
 
 const Button = withStyles({
   root: {
@@ -181,6 +182,9 @@ export default function Edit(props) {
 
   const [timeset, setTimeset] = useState(false)
 
+  const [inputWidthValue, setInputWidthValue] = React.useState(Math.round(cropDetails.width * initialZoom));
+  const [inputHeightValue, setInputHeightValue] = React.useState(Math.round(cropDetails.height * initialZoom));
+
   const onSave = () => {
     apply()
     setExpanded(false)
@@ -193,14 +197,15 @@ export default function Edit(props) {
 
   // useEffect(() => {
   //   if (timeset) {
-  //     setInputWidth(Math.round(cropDetails.width * initialZoom))
-  //     setInputHeight(Math.round(cropDetails.height * initialZoom))
-
+  //     setInputWidthValue(Math.round(cropDetails.width * initialZoom))
+  //     setInputHeightValue(Math.round(cropDetails.height * initialZoom))
   //   }
   // }, [timeset])
 
   useEffect(() => {
     if (timeset) {
+      setInputWidthValue(Math.round(cropDetails.width * initialZoom))
+      setInputHeightValue(Math.round(cropDetails.height * initialZoom))
       //  document.getElementById("input-width").value = Math.round(cropDetails.width * initialZoom)
       // document.getElementById("input-height").value = Math.round(cropDetails.height * initialZoom)
     }
@@ -216,16 +221,18 @@ export default function Edit(props) {
       }, 10);
   };
 
-
   //Crop Features Implementation***************************
 
-  const changeWidth = (event) => {
-
-    window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +event.target.value / initialZoom / window.scaleflexPlugins.zoom });
+  const changeWidth = (value) => {
+    console.log("widht Value : ", value)
+    // setInputWidthValue(Math.round(cropDetails.width * initialZoom))
+    // window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +event.target.value / initialZoom / window.scaleflexPlugins.zoom });
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +value / initialZoom / window.scaleflexPlugins.zoom });
   }
 
-  const changeHeight = (event) => {
-    window.scaleflexPlugins.cropperjs.setCropBoxData({ height: +event.target.value / initialZoom / window.scaleflexPlugins.zoom });
+  const changeHeight = (value) => {
+    // setInputHeightValue(Math.round(cropDetails.height * initialZoom))
+    window.scaleflexPlugins.cropperjs.setCropBoxData({ height: +value / initialZoom / window.scaleflexPlugins.zoom });
   }
 
   const handleSelectResolution = (event) => {
@@ -329,7 +336,7 @@ export default function Edit(props) {
           <div className="d-flex">
             {timeset &&
               <>
-                <TextField
+                {/* <TextField
                   className="mr-3"
                   id="input-width"
                   label="Width(Px)"
@@ -349,7 +356,15 @@ export default function Edit(props) {
                   }}
                   defaultValue={Math.round(cropDetails.height * initialZoom)}
                   onChange={changeHeight}
-                />
+                /> */}
+              <InputNumber
+                value={inputWidthValue}
+                onChange={changeWidth}
+              />
+              <InputNumber
+                value={inputHeightValue}
+                onChange={changeHeight}
+              />
               </>
             }
 

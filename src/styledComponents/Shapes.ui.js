@@ -32,6 +32,7 @@ const TextPropertyWrapper = styled.div`
     height: 30px;
     width: 100%;
     background-color: #3a88fe;
+    cursor: pointer;
   }
 `;
 

@@ -49,7 +49,7 @@ export default class extends Component {
             <span className="resolution-title">Popular Format</span>
             <Select defaultValue="Select Custom Size" style={{ width: '220px', color: '#a1a1a1' }}>
               {resolutions.map(obj =>
-                <Option value={obj}>{obj}</Option>
+                <Option key={obj} value={obj}>{obj}</Option>
               )}
             </Select>
           </SelectScreenWrapper>

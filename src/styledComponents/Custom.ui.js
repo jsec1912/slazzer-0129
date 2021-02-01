@@ -23,6 +23,7 @@ const ToolbaritemsWrapper = styled.div`
 const SelectScreenWrapper = styled.div`
   display: inline-block;
   align-items: center;
+  margin-left: 50px;
 
   .resolution-title {
     font-size: 12px;

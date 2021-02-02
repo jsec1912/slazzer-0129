@@ -3,9 +3,11 @@ import { ToolWrapper, ToolLabel } from '../../styledComponents/index';
 import Icon from '../icon/Icon';
 
 export default class extends Component {
+
   render() {
-    const { obj, activeTab, selectedTool} = this.props;
+    const { obj, selectedTool } = this.props;
     // const filteredName = name === 'rotate' ? 'orientation' : name;
+
     return (
       <ToolWrapper
         // active={activeTab === name}

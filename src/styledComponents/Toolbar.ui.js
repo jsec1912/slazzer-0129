@@ -64,6 +64,8 @@ const EffectsWrapper = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
+  display: flex;
+  flex-direction: column;
   
   ::-webkit-scrollbar {
     height: 10px !important;
@@ -76,27 +78,27 @@ const EffectsWrapper = styled.div`
 `;
 
 const EffectWrapper = styled.div`
-  display: inline-block;
-  vertical-align: top;
+  display: flex;
   padding: 10px;
-  text-align: center;
+  align-items: center;
   min-width: 90px;
-  height: 90px;
+  height: 60px;
   cursor: pointer;
   color: ${props => props.theme.colors.text};
   font-size: 12px;
   background: ${p => p.active ? p.theme.colors.secondaryBgHover : 'transparent'};
   
   &:hover {
-    background: ${p => p.theme.colors.secondaryBgHover};
+    background: #262626;
   }
 `;
 
 const EffectIcon = styled.div`
   background: url('${props => props.src}') 50% 50% / cover no-repeat;
-  width: 55px;
-  height: 55px;
-  border-radius: 2px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
   overflow: hidden;
   display: inline-block;
 `;

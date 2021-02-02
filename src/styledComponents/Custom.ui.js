@@ -11,6 +11,30 @@ const WorkareaWrapper = styled.div`
  transition: 0.5s ease;
 `;
 
+const FooterItemsWrapper = styled.div`
+  display: inline-flex;
+  ul {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0;
+    list-style: none;
+  }
+
+  ul>li {
+    max-height: 18px;
+    display: flex;
+    align-items: center;
+    border-right: 2px solid #1f1f1f;
+    padding-right: 8px;
+    margin-right: 8px;
+  }
+
+  .ant-select-selector {
+    background-color: transparent;
+    border: none;
+  }
+`;
+
 const ToolbaritemsWrapper = styled.div`
   width: 260px;
   position: absolute;
@@ -40,4 +64,4 @@ const SelectScreenWrapper = styled.div`
   }
 `;
 
-export { WorkareaWrapper, ToolbaritemsWrapper, SelectScreenWrapper };
+export { WorkareaWrapper, ToolbaritemsWrapper, SelectScreenWrapper, FooterItemsWrapper };

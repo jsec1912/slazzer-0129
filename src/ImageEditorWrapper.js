@@ -36,11 +36,11 @@ class ImageEditorWrapper extends Component {
       theme: {
         colors: {
           ...(isCustomColorScheme
-              ? { colors: config.colorScheme }
-              : config.colorScheme === 'light'
-                ? light
-                : dark
-            ).colors,
+            ? { colors: config.colorScheme }
+            : config.colorScheme === 'light'
+              ? light
+              : dark
+          ).colors,
           ...config.theme.colors
         },
         fonts: config.theme.fonts
@@ -57,12 +57,12 @@ class ImageEditorWrapper extends Component {
   }
 
   componentDidUpdate(prevProps) {
-   
-    if (this.props.src !== prevProps.src) {
-      this.setState({ src: this.props.src });
-    }
 
-  } 
+    // if (this.props.src !== prevProps.src) {
+    //   this.setState({ src: this.props.src });
+    // }
+
+  }
 
   processConfig = (config) => {
     const processWithCloudService = config.processWithCloudimage;
@@ -92,11 +92,11 @@ class ImageEditorWrapper extends Component {
 
   render() {
     const { isVisible, config, t, theme } = this.state;
-    const { onComplete = () => {}, onBeforeComplete, closeOnLoad, handleReceivedImg, src } = this.props;
+    const { onComplete = () => { }, onBeforeComplete, closeOnLoad, handleReceivedImg, src } = this.props;
     const { showInModal = true } = config;
     if (!isVisible || isServerSide) return null;
-    if(src instanceof Blob && config.processWithCloudimage) return null;
-    
+    if (src instanceof Blob && config.processWithCloudimage) return null;
+
     const Inner = (
       <Container>
         <ImageEditor
@@ -105,7 +105,7 @@ class ImageEditorWrapper extends Component {
           onComplete={onComplete}
           onBeforeComplete={onBeforeComplete}
           closeOnLoad={closeOnLoad}
-          handleReceivedImg = {handleReceivedImg}
+          handleReceivedImg={handleReceivedImg}
           t={t}
         />
       </Container>
@@ -114,7 +114,7 @@ class ImageEditorWrapper extends Component {
     return (
       <ThemeProvider theme={{ ...theme }}>
         {showInModal
-        ? <Modal
+          ? <Modal
             noBorder
             fullScreen={'lg'}
             isHideCloseBtn={true}
@@ -123,7 +123,7 @@ class ImageEditorWrapper extends Component {
           >
             {Inner}
           </Modal>
-        : <div
+          : <div
             className={CONTAINER_SELECTOR}
             id={CONTAINER_SELECTOR}
             style={{ width: '100%', height: '100%' }}

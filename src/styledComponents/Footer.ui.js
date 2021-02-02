@@ -4,11 +4,15 @@ import { getIconStyles, getIconByName } from './styleUtils';
 
 
 const Footer = styled.div`
-  background: ${props => props.theme.colors.secondaryBg};
-  border-top: 1px solid ${props => props.theme.colors.border};
-  height: 34px;
+  background: #262626;
+  height: 50px;
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  color: #a1a1a1;
+  padding: 0 20px;
+  justify-content: space-between;
 `;
 
 const PreviousBtn = styled.div`
@@ -100,7 +104,7 @@ const SwitcherSwitch = styled.span`
     width: 10px;
     height: 10px;
     margin: 5.5px;
-    background: ${p =>  p.theme.colors.accent};
+    background: ${p => p.theme.colors.accent};
     position: absolute; top: 0; bottom: 0;
     right:  ${props => props.checked ? '0' : '37px'};
     border: 1px solid ${p => p.theme.colors.accent}; 
@@ -139,8 +143,8 @@ const Switcher = ({ id, handleChange, text, checked, style, ...otherProps }) => 
         checked={checked}
       />
       <SwitcherLabel htmlFor={id}>
-        <SwitcherInner checked={checked}/>
-        <SwitcherSwitch checked={checked}/>
+        <SwitcherInner checked={checked} />
+        <SwitcherSwitch checked={checked} />
       </SwitcherLabel>
     </SwitcherWrapper>
     {text && <SwitcherText onClick={() => { handleChange(!checked); }}>{text}</SwitcherText>}

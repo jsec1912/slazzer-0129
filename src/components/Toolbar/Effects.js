@@ -6,7 +6,7 @@ import Effect from './Effect';
 
 export default class extends Component {
   render() {
-    const { onApplyEffects, effect, noCapitalStrs } = this.props;
+    const { onApplyEffects, effect/* , noCapitalStrs  */ } = this.props;
 
     return (
       <EffectsWrapper>
@@ -16,7 +16,7 @@ export default class extends Component {
             key={name}
             name={name}
             onApplyEffects={onApplyEffects}
-            noCapitalStrs={noCapitalStrs}
+          // noCapitalStrs={noCapitalStrs}
           />
         ))}
       </EffectsWrapper>

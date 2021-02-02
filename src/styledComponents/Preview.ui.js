@@ -6,7 +6,7 @@ const PreviewWrapper = styled.div`
   display: flex;
   text-align: center;
   position: relative;
-  height: calc(100% - 50px);
+  height: calc(100% - 100px);
 
   &:before {
     content: '';

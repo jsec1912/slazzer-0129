@@ -224,7 +224,6 @@ export default function Edit(props) {
   //Crop Features Implementation***************************
 
   const changeWidth = (value) => {
-    console.log("widht Value : ", value)
     // setInputWidthValue(Math.round(cropDetails.width * initialZoom))
     // window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +event.target.value / initialZoom / window.scaleflexPlugins.zoom });
     window.scaleflexPlugins.cropperjs.setCropBoxData({ width: +value / initialZoom / window.scaleflexPlugins.zoom });
@@ -314,8 +313,6 @@ export default function Edit(props) {
     setRestoreVal(newValue)
   }
 
-
-  console.log("cropdetrails : ", cropDetails)
   return (
     <div className="">
       <Accordion square expanded={expanded === 'crop'} onChange={handleChange('crop')}>
@@ -357,14 +354,14 @@ export default function Edit(props) {
                   defaultValue={Math.round(cropDetails.height * initialZoom)}
                   onChange={changeHeight}
                 /> */}
-              <InputNumber
-                value={inputWidthValue}
-                onChange={changeWidth}
-              />
-              <InputNumber
-                value={inputHeightValue}
-                onChange={changeHeight}
-              />
+                <InputNumber
+                  value={inputWidthValue}
+                  onChange={changeWidth}
+                />
+                <InputNumber
+                  value={inputHeightValue}
+                  onChange={changeHeight}
+                />
               </>
             }
 

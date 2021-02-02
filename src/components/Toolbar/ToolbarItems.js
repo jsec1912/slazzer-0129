@@ -47,6 +47,7 @@ export default class extends Component {
         <PerfectScrollbar>
           {activeTool === 'Edit' && <Edit {...this.props} />}
           {activeTool === 'Text' && <Text {...this.props} />}
+          {activeTool === 'Saturation Effects' && <Effects {...this.props} />}
           {/* {activeTab === 'effects' && <Effects {...this.props}/>}
             {activeTab === 'filters' && <Filters {...this.props}/>}
             {activeTab === 'rotate' && <Orientation {...this.props}/>}
@@ -57,8 +58,8 @@ export default class extends Component {
             {activeTab === 'shapes' && <Shapes {...this.props}/>}
             {activeTab === 'image' && <Image {...this.props}/>}
             {activeTab === 'text' && <Text {...this.props}/>} */}
-          {/* {(isShowSpinner) && <NoClickOverlay />}
-          {activeBody !== 'preview' && <NoClickToolbar />} */}
+          {(isShowSpinner) && <NoClickOverlay />}
+          {activeBody !== 'preview' && <NoClickToolbar />}
         </PerfectScrollbar>
       </div>
     )

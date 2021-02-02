@@ -7,7 +7,7 @@ import './lib/caman';
 import { DEFAULT_WATERMARK, ON_CLOSE_STATUSES } from './config';
 // NAVBAR_TOOLS
 import { getCanvasNode } from './utils';
-import { Select } from 'antd';
+import Select from 'antd/lib/select';
 
 
 const INITIAL_PARAMS = {
@@ -76,7 +76,8 @@ export default class extends Component {
       availableShapes: [],
       activeTool: null,
       activeToolItems: false,
-      isDropped: false
+      /* isDropped: false */
+      isDropped: true
     }
   }
 
@@ -207,6 +208,7 @@ export default class extends Component {
   }
 
   selectedTool = (val) => {
+    this.updateState({ activeTab: val })
     this.setState({ activeTool: val })
     this.setState({ activeToolItems: true })
   }
@@ -406,7 +408,7 @@ export default class extends Component {
       activeTool,
       isDropped
     } = this.state;
-    const { src, config, onClose, onComplete, closeOnLoad = true, t = {}, theme, handleReceivedImg } = this.props;
+    const { src, config, onClose, onComplete, closeOnLoad = true, t = {}, theme, /* handleReceivedImg */ } = this.props;
 
     const imageParams = { effect, filter, crop, resize, rotate, flipX, flipY, adjust, correctionDegree };
     const toolbarProps = {
@@ -513,19 +515,22 @@ export default class extends Component {
     };
 
     const toolbarItemsProps = {
-      isActiveToolbox: this.isActiveToolbox,
       activeTool,
       config,
       activeTab,
-      updateState: this.updateState,
       isShowSpinner,
       activeBody,
-      onRotate: this.onRotate,
+      shapeOperations,
       ...imageParams,
-      onCorrectionDegree: this.onCorrectionDegree,
       original,
       initialZoom,
       cropDetails,
+      effect,
+      onApplyEffects: this.onApplyEffects,
+      onCorrectionDegree: this.onCorrectionDegree,
+      updateState: this.updateState,
+      isActiveToolbox: this.isActiveToolbox,
+      onRotate: this.onRotate,
       apply: this.apply
     };
 
@@ -549,7 +554,7 @@ export default class extends Component {
     };
 
     const dropImgProps = {
-      handleReceivedImg,
+      /*  handleReceivedImg, */
       setDropped: () => { this.setState({ isDropped: true }) }
     }
 

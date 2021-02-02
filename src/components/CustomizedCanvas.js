@@ -36,9 +36,8 @@ export default class CustomizedCanvas extends Component {
       this._canvas.addEventListener('mousedown', this.onSelect);
       this._context = this._canvas.getContext('2d');
 
-      const border = `1px solid ${
-        this.props.theme?.colors?.text || (this.props.colorScheme === 'light' ? '#000' : '#fff')
-      }`;
+      const border = `1px solid ${this.props.theme?.colors?.text || (this.props.colorScheme === 'light' ? '#000' : '#fff')
+        }`;
       const availableShapes = [
         {
           label: 'Rectangle',
@@ -116,7 +115,7 @@ export default class CustomizedCanvas extends Component {
       // Mapping both (X & WIDTH), (Y & HEIGHT) of shape from old to new canvas with final dimnesions.
       shape.x = shape.x.mapNumber(0, oldCanvas.width, 0, width);
       shape.y = shape.y.mapNumber(0, oldCanvas.height, 0, height);
-      
+
       if (shape.variant !== SHAPES_VARIANTS.TEXT) {
         shape.width = shape.width.mapNumber(0, oldCanvas.width, 0, width);
         shape.height = shape.height.mapNumber(0, oldCanvas.height, 0, height);
@@ -130,7 +129,7 @@ export default class CustomizedCanvas extends Component {
     return this._canvas;
   }
 
-  updateState = (data, callback = () => {}) => {
+  updateState = (data, callback = () => { }) => {
     const { updateState } = this.props;
     updateState(data, callback);
   }
@@ -157,45 +156,47 @@ export default class CustomizedCanvas extends Component {
 
   onSelect = (event) => {
     const { shapes, activeTab } = this.props;
-    if (!this._allowedTabs.includes(activeTab)) {
+
+    if (!this._allowedTabs.includes(activeTab.toLowerCase())) {
       return;
     }
 
     const { offsetX, offsetY } = event;
 
-    
+
     let foundShape = false;
 
     shapes.forEach(
       (shape) => {
         if (
-            !shape.hidden
-            && offsetX >= shape.x
-            && offsetX <= shape.x + shape.width
-            && offsetY >= shape.y
-            && offsetY <= shape.y + shape.height
-            && shape.tab === activeTab
-          ) {
-            foundShape = true;
+          !shape.hidden
+          && offsetX >= shape.x
+          && offsetX <= shape.x + shape.width
+          && offsetY >= shape.y
+          /*  && offsetY <= shape.y + shape.height */
+          && shape.tab === activeTab.toLowerCase()
+        ) {
+          foundShape = true;
 
-            this.updateState({
-              selectedShape: {
-                ...shape,
-                resizingBox: true,
-                startEdgeOffset: {
-                  x: offsetX - shape.x,
-                  y: offsetY - shape.y,
-                }
+          this.updateState({
+            selectedShape: {
+              ...shape,
+              resizingBox: true,
+              startEdgeOffset: {
+                x: offsetX - shape.x,
+                y: offsetY - shape.y,
               }
-            });
+            }
 
-            this.activateResizingActions();
-            this._canvas.addEventListener('keyup', this.activateShapeDeleting);
-            this._canvas.addEventListener('mousemove', this.startDragging);
-            this._canvas.addEventListener('touchmove', this.startDragging);
-            document.addEventListener('mouseup', this.endDragging);
-            document.addEventListener('touchend', this.endDragging);
-          }
+          });
+
+          this.activateResizingActions();
+          this._canvas.addEventListener('keyup', this.activateShapeDeleting);
+          this._canvas.addEventListener('mousemove', this.startDragging);
+          this._canvas.addEventListener('touchmove', this.startDragging);
+          document.addEventListener('mouseup', this.endDragging);
+          document.addEventListener('touchend', this.endDragging);
+        }
       }
     );
 
@@ -215,8 +216,8 @@ export default class CustomizedCanvas extends Component {
     const { selectedShape } = this.props;
 
     if (
-        (key === 'Delete' || key === 'Backspace')
-        && selectedShape
+      (key === 'Delete' || key === 'Backspace')
+      && selectedShape
     ) {
       this.deleteShapeByKeyOrIndex({ index: selectedShape.index });
       this.updateState({ selectedShape: {} });
@@ -229,7 +230,7 @@ export default class CustomizedCanvas extends Component {
     const { selectedShape } = this.props;
 
     if (selectedShape.lockScaleToPercentage) { return; }
-    
+
     Array.from(document.getElementsByClassName('shape-resizing-control'))
       .forEach((control) => {
         control.addEventListener('mousedown', this.trackShapeResize)
@@ -255,7 +256,7 @@ export default class CustomizedCanvas extends Component {
     ) { return; }
 
     const oldHeight = height;
-    
+
     const { direction } = resizeControlTarget.dataset;
     if (processWithCloudimage) {
       const notAllowedWithCloudImage = ['e', 'w', 'n', 's'];
@@ -285,49 +286,49 @@ export default class CustomizedCanvas extends Component {
       y += movementY;
     }
 
-    switch(direction) {
+    switch (direction) {
       case 'e':
         eastHandle();
-      break;
+        break;
       case 'w':
         westHandle();
-      break;
+        break;
       case 'n':
         northHandle();
-      break;
+        break;
       case 's':
         southHandle();
-      break;
+        break;
       case 'ne':
         if (shiftKey) { keepShapeRatio(false); }
         eastHandle();
         if (width >= this._canvas.width && shiftKey) { break; }
         northHandle();
-      break;
+        break;
       case 'nw':
         if (shiftKey) { keepShapeRatio(true); }
         westHandle();
         if (width >= this._canvas.width && shiftKey) { break; }
         northHandle();
-      break;
+        break;
       case 'se':
         if (shiftKey) { keepShapeRatio(true); }
         eastHandle();
         if (width >= this._canvas.width && shiftKey) { break; }
         southHandle();
-      break;
+        break;
       case 'sw':
         if (shiftKey) { keepShapeRatio(false); }
         westHandle();
         if (width >= this._canvas.width && shiftKey) { break; }
         southHandle();
-      break;
+        break;
       default:
-      return;
+        return;
     }
 
     if (variant === SHAPES_VARIANTS.SQUARE || variant === SHAPES_VARIANTS.CIRCLE) {
-      if (height !== oldHeight) { width = height;} else { height = width; }
+      if (height !== oldHeight) { width = height; } else { height = width; }
     }
 
     // In cloudimage process f max width or height don't increase any of them.
@@ -337,9 +338,9 @@ export default class CustomizedCanvas extends Component {
 
     const minWidthAndHeight = 15;
     if (
-        height <= minWidthAndHeight ||
-        width <= minWidthAndHeight
-      ) { return; }
+      height <= minWidthAndHeight ||
+      width <= minWidthAndHeight
+    ) { return; }
 
     // Limiting the dragging to be inside the canvas only.
     if (x < 0) { x = 0 }
@@ -370,10 +371,10 @@ export default class CustomizedCanvas extends Component {
   removeResizingBox = ({ offsetX, offsetY }) => {
     const { selectedShape } = this.props;
     if (
-        offsetX < selectedShape.x
-        || offsetX > selectedShape.x + selectedShape.width
-        || offsetY < selectedShape.y
-        || offsetY > selectedShape.y + selectedShape.height
+      offsetX < selectedShape.x
+      || offsetX > selectedShape.x + selectedShape.width
+      || offsetY < selectedShape.y
+      || offsetY > selectedShape.y + selectedShape.height
     ) {
       this.updateState({
         selectedShape: { ...selectedShape, resizingBox: false }
@@ -391,10 +392,10 @@ export default class CustomizedCanvas extends Component {
       event.offsetX = clientX - x;
       event.offsetY = clientY - y;
     }
-    
+
     const { selectedShape } = this.props;
     const { startEdgeOffset = {}, width, height, index } = selectedShape;
-    
+
     // event.offsetX - startEdgeOffset.x for the shape's X from its starting point not the exact mouse position.
     let newX = event.offsetX - startEdgeOffset.x;
     let newY = event.offsetY - startEdgeOffset.y;
@@ -410,7 +411,7 @@ export default class CustomizedCanvas extends Component {
       x: newX,
       y: newY
     }
-    
+
     this.updateShape(newSelectedShape, index, { selectedShape: newSelectedShape });
   }
 
@@ -437,7 +438,7 @@ export default class CustomizedCanvas extends Component {
     this._context.strokeStyle = stroke.color || 'transparent';
     this._context.lineWidth = stroke.width || 1;
     drawFn();
-    
+
     // Make the new canvas rounded if the crop is rounded style.
     // round is a manually written protoype method from canvas-round file in utils.
     if (this.props.round) { this._context.round() }
@@ -445,7 +446,7 @@ export default class CustomizedCanvas extends Component {
 
   redrawShape = (index = undefined) => {
     let { shapes } = this.props;
-    
+
     this.clearShape(0, 0, this._canvas.width, this._canvas.height);
 
     const shapesCount = shapes.length;
@@ -470,7 +471,7 @@ export default class CustomizedCanvas extends Component {
   }
 
   drawShapeThroughVariant = (shape) => {
-    switch(shape.variant) {
+    switch (shape.variant) {
       case SHAPES_VARIANTS.IMAGE:
         this.drawImage(shape);
         break;
@@ -532,7 +533,7 @@ export default class CustomizedCanvas extends Component {
     return [width, height];
   }
 
-  drawText = ({ text, textSize, textFont, x, y, stroke, ...others })  => {
+  drawText = ({ text, textSize, textFont, x, y, stroke, ...others }) => {
     this.draw(() => {
       this.setTextStyle({ textSize, textFont });
       this._context.fillText(text, x, y, this._canvas.width);
@@ -555,7 +556,7 @@ export default class CustomizedCanvas extends Component {
     if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
 
     this.drawRect(drawingArgs);
-    
+
     const index = this.pushShapeToShapes(allArgs);
 
     this.updateState({
@@ -575,9 +576,11 @@ export default class CustomizedCanvas extends Component {
   ) => {
     const [centerX, centerY] = this.getCanvasCenter(radius, radius);
     const widthAndHeight = radius * 2;
-    
-    const drawingArgs = { x: x || centerX, y: y || centerY, radius, color, opacity, stroke,
-      width: widthAndHeight, height: widthAndHeight };
+
+    const drawingArgs = {
+      x: x || centerX, y: y || centerY, radius, color, opacity, stroke,
+      width: widthAndHeight, height: widthAndHeight
+    };
     const allArgs = { ...this._initArgs, ...others, ...drawingArgs, tab, variant: SHAPES_VARIANTS.CIRCLE };
 
     if (others.key && this.replaceShapeIfExisted(others.key, allArgs)) { return; }
@@ -592,10 +595,10 @@ export default class CustomizedCanvas extends Component {
   }
 
   addImage = (
-    { img, x = undefined, y = undefined, opacity = 1.0, tab='image', stroke = {}, otherStates, ...others } = {}
+    { img, x = undefined, y = undefined, opacity = 1.0, tab = 'image', stroke = {}, otherStates, ...others } = {}
   ) => {
-    if(img) {
-      const addIt = () => {        
+    if (img) {
+      const addIt = () => {
         const [originalWidth, originalHeight] = this.getSuitableImgDiemensions(img, others.lockScaleToPercentage);
 
         const [centerX, centerY] = this.getCanvasCenter(
@@ -629,7 +632,7 @@ export default class CustomizedCanvas extends Component {
       if (typeof img === 'string') {
         img = this.makeImgElement(img, addIt);
       } else { addIt(); }
-      
+
     }
   }
 
@@ -638,13 +641,15 @@ export default class CustomizedCanvas extends Component {
     stroke = {}, opacity = 1.0, tab = 'text', otherStates, ...others
   } = {}) => {
     const [width, height] = this.getTextWidthAndHeight({ text, textSize, textFont });
-    
+
     // Set text style here for measuring the text's width & hegiht before drawing.
     const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
 
     if (text) {
-      const drawingArgs = { text, textSize, textFont, x: x || centerX, y: y || centerY, opacity,
-        stroke, color };
+      const drawingArgs = {
+        text, textSize, textFont, x: x || centerX, y: y || centerY, opacity,
+        stroke, color
+      };
       const allArgs = { ...this._initArgs, ...others, ...drawingArgs, width, height, variant: SHAPES_VARIANTS.TEXT, tab };
 
       if (others.key && this.replaceShapeIfExisted(others.key, allArgs, otherStates)) { return; }
@@ -671,7 +676,7 @@ export default class CustomizedCanvas extends Component {
     }
 
     const args = { ...shapeArgs, otherStates };
-    switch(shapeArgs.variant) {
+    switch (shapeArgs.variant) {
       case SHAPES_VARIANTS.IMAGE:
         this.addImage(args);
         break;
@@ -713,7 +718,7 @@ export default class CustomizedCanvas extends Component {
       width *= scaleValue;
       height *= scaleValue;
     }
-    
+
     width = this.fromLatestCanvasSizeValue(width, 'width');
     height = this.fromLatestCanvasSizeValue(height, 'height');
 
@@ -743,13 +748,13 @@ export default class CustomizedCanvas extends Component {
   setShapeVisibilityByKeyOrIndex = ({ key, index }, isHidden = undefined) => {
     const shape = this.getShapeByKeyOrIndex({ key, index });
     if (shape && shape.hidden !== isHidden) {
-      this.updateShape({ hidden: isHidden || !shape.hidden}, shape.index);
+      this.updateShape({ hidden: isHidden || !shape.hidden }, shape.index);
     }
   }
 
   getShapesIndexByAnyProp = (propertyName, propertyValue) => {
     const { shapes } = this.props;
-    
+
     if (shapes && shapes.length === 0) { return []; }
 
     const shapesIndicies = [];
@@ -757,8 +762,8 @@ export default class CustomizedCanvas extends Component {
     shapes
       .filter(({ [propertyName]: filterProp }, index) => {
         if (filterProp === propertyValue ||
-            (typeof filterProp === 'undefined' && Boolean(filterProp) === propertyValue)
-         ) {
+          (typeof filterProp === 'undefined' && Boolean(filterProp) === propertyValue)
+        ) {
           shapesIndicies.push(index);
           return true;
         }
@@ -769,13 +774,13 @@ export default class CustomizedCanvas extends Component {
     return shapesIndicies;
   }
 
-  updateShapes = (updatedData, otherStates, callback = () => {}) => {
+  updateShapes = (updatedData, otherStates, callback = () => { }) => {
     let { shapes } = this.props;
     shapes = shapes.map(s => ({ ...s, ...updatedData }));
     this.updateState({ shapes, ...otherStates }, callback);
   }
 
-  replaceAllShapes = (newShapes, callback = () => {}) => {
+  replaceAllShapes = (newShapes, callback = () => { }) => {
     this.updateState({ shapes: newShapes }, () => {
       this.redrawShape();
       callback();
@@ -786,12 +791,12 @@ export default class CustomizedCanvas extends Component {
     const { shapes, selectedShape } = this.props;
 
     if (!updatedData ||
-        (
-          (!index && index !== 0) &&
-          (!selectedShape || (!selectedShape.index && selectedShape.index !== 0))
-        ) 
-      ) { return; }
-    
+      (
+        (!index && index !== 0) &&
+        (!selectedShape || (!selectedShape.index && selectedShape.index !== 0))
+      )
+    ) { return; }
+
     if (typeof updatedData.img === 'string') {
       this.updateState({
         selectedShape: { ...selectedShape, lockScaleToPercentage: updatedData.lockScaleToPercentage, img: updatedData.img }
@@ -811,7 +816,7 @@ export default class CustomizedCanvas extends Component {
       const latestShapes = shapes;
 
       if (
-        (updatedData.textSize && updatedData.textSize !== shapes[index].textSize)||
+        (updatedData.textSize && updatedData.textSize !== shapes[index].textSize) ||
         (updatedData.text && updatedData.text !== shapes[index].text)
       ) {
         const targetShape = shapes[index];
@@ -831,7 +836,7 @@ export default class CustomizedCanvas extends Component {
 
         if (typeof updatedData.x !== 'undefined' && typeof updatedData.y !== 'undefined') {
           newData.x = updatedData.x;
-          newData.y = updatedData.y; 
+          newData.y = updatedData.y;
         }
 
         if (updatedData.stroke) {
@@ -864,19 +869,19 @@ export default class CustomizedCanvas extends Component {
     const { width: strokeWidth } = stroke;
     const strokeWidthConst = strokeWidth || 1;
 
-    const clearFromX  = x - strokeWidthConst;
-    const clearFromY  =  y - strokeWidthConst;
-    const clearWidth  = width + strokeWidthConst;
+    const clearFromX = x - strokeWidthConst;
+    const clearFromY = y - strokeWidthConst;
+    const clearWidth = width + strokeWidthConst;
     const clearHeight = height + strokeWidthConst;
 
     this._context.clearRect(clearFromX, clearFromY, clearWidth, clearHeight);
   }
-  
+
   eraseAndRemoveShapeFromArray = (index, shapes) => {
     if (Object.keys(this.targettedShape(index)).length === 0) { return; }
 
     this.clearShape(0, 0, this._canvas.width, this._canvas.height);
-    
+
     const newShapes = shapes.filter(shape => {
       if (shape.index === index) { return false; }
       if (shape.index > index) { shape.index -= 1; };
@@ -894,7 +899,7 @@ export default class CustomizedCanvas extends Component {
     if (!index && index !== 0 && !key) {
 
       if (!selectedShape) { return; }
-      
+
       index = selectedShape.index;
     }
 
@@ -961,10 +966,10 @@ export default class CustomizedCanvas extends Component {
     img.crossOrigin = 'Anonymous';
     img.src = `${src}?v=${Math.random()}`;
 
-    img.onload = () =>  {
+    img.onload = () => {
       if (dataObject) {
         let width, height;
-        
+
         if (dataObject.position) {
           let x, y;
           [
@@ -982,14 +987,14 @@ export default class CustomizedCanvas extends Component {
 
         dataObject.width = width || originalWidth;
         dataObject.originalWidth = originalWidth;
-        dataObject.height =  height || originalHeight;
+        dataObject.height = height || originalHeight;
         dataObject.originalHeight = originalHeight;
 
-        fn(dataObject,...args);
+        fn(dataObject, ...args);
       } else {
         fn(...args);
       }
-      
+
       this.updateState({ isShowSpinner: false });
     }
 
@@ -998,7 +1003,7 @@ export default class CustomizedCanvas extends Component {
       console.error('Error loading the image...');
     }
 
-    if (dataObject){ dataObject.img = img }
+    if (dataObject) { dataObject.img = img }
     return img;
   }
 
@@ -1007,7 +1012,7 @@ export default class CustomizedCanvas extends Component {
       // property = width or height
       return number.mapNumber(0, this.state.latestCanvasSize[property], 0, this._canvas[property]);
     }
-    
+
     return number;
   }
 
@@ -1033,7 +1038,7 @@ export default class CustomizedCanvas extends Component {
       resizingBoxPoints.splice(0, 0, 'e', 'n', 'w', 's',)
     }
     const left = (this._canvas ? this._canvas.offsetLeft : 0) + x;
-    const top = (this._canvas ? this._canvas.offsetTop : 0 ) + y;
+    const top = (this._canvas ? this._canvas.offsetTop : 0) + y;
     const mutualStyles = { pointerEvents: 'all' };
 
     return (
@@ -1049,8 +1054,10 @@ export default class CustomizedCanvas extends Component {
         <div
           ref={this.shapeResizingBoxRef}
           className="cropper-crop-box"
-          style={{ display: resizingBox && !lockScaleToPercentage ? 'block' : 'none',
-            width, height, left, top, pointerEvents: 'none' }}
+          style={{
+            display: resizingBox && !lockScaleToPercentage ? 'block' : 'none',
+            width, height, left, top, pointerEvents: 'none'
+          }}
         >
           {resizingBoxLines.map((l) => (
             <span
@@ -1059,7 +1066,7 @@ export default class CustomizedCanvas extends Component {
               data-direction={l}
               style={mutualStyles}
             ></span>
-            )
+          )
           )}
           {resizingBoxPoints.map((p) => (
             <span
@@ -1068,7 +1075,7 @@ export default class CustomizedCanvas extends Component {
               data-direction={p}
               style={mutualStyles}
             ></span>
-            )
+          )
           )}
         </div>
       </>

@@ -40,7 +40,6 @@ export default class extends Component {
               'API-KEY': '9fd6e94f3dd24659b7961cae090cdac6'
             },
             onUploadProgress: progressEvent => {
-              console.log("loaded : ", progressEvent.loaded)
               this.setState({
                 percent: Math.floor((progressEvent.loaded * 100) / progressEvent.total)
               })

@@ -7,7 +7,7 @@ import { ON_CLOSE_STATUSES, RESOLUTIONS } from '../../config';
 import MuiButton from '@material-ui/core/Button';
 import Icon from '../icon/Icon';
 import { withStyles } from '@material-ui/core/styles';
-import { Select } from 'antd';
+import Select from 'antd/lib/select';
 
 const { Option } = Select;
 export default class extends Component {

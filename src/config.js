@@ -269,6 +269,10 @@ const TEXT_OPTIONS = {
   ]
 }
 
+const SCALE_PERCENTAGE = [
+  '100%', '25%', '50%', '75%', '200%', '400%', '800%', '1600%'
+]
+
 export {
   MODAL_ID,
   PREVIEW_CANVAS_ID,
@@ -292,5 +296,6 @@ export {
   NAVBAR_TOOLS,
   EDIT_TOOLS,
   TEXT_OPTIONS,
-  RESOLUTIONS
+  RESOLUTIONS,
+  SCALE_PERCENTAGE
 };

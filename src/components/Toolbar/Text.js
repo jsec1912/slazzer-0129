@@ -10,7 +10,7 @@ import { TEXT_OPTIONS } from '../../config';
 import Icon from '../icon/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import MuiFab from '@material-ui/core/Fab';
-import { makeStyles, withStyles  } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import { ColorPicker } from 'material-ui-color';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -40,11 +40,11 @@ const Fab = withStyles({
 
 
 export default class Text extends Component {
-  // componentDidMount() {
-  //   const { shapeOperations } = this.props;
+  componentDidMount() {
+    const { shapeOperations } = this.props;
 
-  //   shapeOperations.addText();
-  // }
+    shapeOperations.addText();
+  }
 
   // updateOpacity = (newVal) => this.props.shapeOperations.updateShape({ opacity: newVal });
   // updateOpacity = () => {
@@ -56,10 +56,7 @@ export default class Text extends Component {
   //   shapeOperations.updateShape({ stroke: { ...stroke, [property]: value }});
   // }
 
-  updatePropertyFromEvent = (e) => {
-    console.log(e.target.value)
-  }
-  // updatePropertyFromEvent = (e) => this.props.shapeOperations.updateShape({ [e.target.name]: e.target.value });
+  updatePropertyFromEvent = (e) => this.props.shapeOperations.updateShape({ [e.target.name]: e.target.value });
 
   // state = {
   //   displayColorPicker: false,
@@ -97,10 +94,9 @@ export default class Text extends Component {
       opacity = 1
     } = selectedShape;
 
-    const { displayColorPicker, color } = this.state
-    console.log("optins : ", TEXT_OPTIONS)
+    // const { displayColorPicker, color } = this.state
 
-    const background = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+    // const background = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
 
     return (
@@ -112,8 +108,7 @@ export default class Text extends Component {
             name="text"
             fullSize
             placeholder="Enter Text"
-            style={{ minWidth: 111 }}
-          onChange={this.updatePropertyFromEvent}
+            onChange={this.updatePropertyFromEvent}
           />
           <TextPropertyWrapper>
             <div className="text-proper-title">
@@ -166,7 +161,7 @@ export default class Text extends Component {
             <Row className="mt-4 mb-3">
               <Col span={4}>
                 <Fab size="small" color="primary">
-                  <Icon name="bold"/>
+                  <Icon name="bold" />
                 </Fab>
               </Col>
               <Col span={4}>
@@ -175,24 +170,24 @@ export default class Text extends Component {
                 </Fab>
               </Col>
               <Col span={4}>
-                 <Fab size="small" color="primary">
+                <Fab size="small" color="primary">
                   <Icon name="underline" />
                 </Fab>
               </Col>
               <Col span={4}>
                 <Fab size="small" color="primary">
-                <Icon name="align-left" />
-              </Fab>
+                  <Icon name="align-left" />
+                </Fab>
               </Col>
               <Col span={4}>
                 <Fab size="small" color="primary">
-                <Icon name="align-center" />
-              </Fab>
+                  <Icon name="align-center" />
+                </Fab>
               </Col>
               <Col span={4}>
                 <Fab size="small" color="primary">
-                <Icon name="align-right" />
-              </Fab>
+                  <Icon name="align-right" />
+                </Fab>
               </Col>
             </Row>
 

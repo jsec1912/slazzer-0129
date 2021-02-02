@@ -513,6 +513,8 @@ export default class extends Component {
       selectedShape,
       latestCanvasSize
     };
+    
+    console.log("selected: ", activeTool, activeTab,activeBody)
 
     const toolbarItemsProps = {
       activeTool,

@@ -3,7 +3,6 @@ import { PreviewCanvas } from '../styledComponents';
 import { getWatermarkSquaredPosition } from '../utils';
 import { PREVIEW_CANVAS_ID, SHAPES_VARIANTS, WATERMARK_UNIQUE_KEY } from '../config';
 import '../utils/canvas-round';
-import { fabric } from 'fabric';
 
 
 export default class CustomizedCanvas extends Component {
@@ -645,7 +644,7 @@ export default class CustomizedCanvas extends Component {
 
     // Set text style here for measuring the text's width & hegiht before drawing.
     const [centerX, centerY] = this.getCanvasCenter(width / 2, height / 2);
-    
+
     // const fabricCanvas = new fabric.Canvas(this.canvasRef)
 
     // const fabricText = new fabric.Textbox('A computer is poor', {

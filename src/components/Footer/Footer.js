@@ -90,7 +90,7 @@ export default class extends Component {
                     operationObject: { ...operationList[currentOperationIndex], index: currentOperationIndex }
                   });
                 }}
-                disabled={isPrevForbidden}
+              // disabled={isPrevForbidden}
               >
                 <Icon name="corner-up-left" />
               </IconButton>
@@ -101,14 +101,14 @@ export default class extends Component {
                     operationObject: { ...operationList[currentOperationIndex], index: currentOperationIndex }
                   });
                 }}
-                disabled={isNextForbidden}
+              // disabled={isNextForbidden}
               >
                 <Icon name="corner-up-right" />
               </IconButton>
             </li>
             <li style={{ borderRight: 'none' }}>
               <IconButton
-                disabled={activeBody === 'preview'}
+                // disabled={activeBody === 'preview'}
                 onClick={() => { activeBody === 'preview' && resetOperations(); }}
               >
                 <Icon name="repeat" />

@@ -12,6 +12,7 @@ export default class extends Component {
       <ToolWrapper
         // active={activeTab === name}
         onClick={() => selectedTool(obj.name)}
+
       >
 
         <Icon name={obj.icon}></Icon>

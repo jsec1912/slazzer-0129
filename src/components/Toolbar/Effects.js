@@ -16,6 +16,7 @@ export default class extends Component {
             key={name}
             name={name}
             onApplyEffects={onApplyEffects}
+            {...this.props}
           // noCapitalStrs={noCapitalStrs}
           />
         ))}

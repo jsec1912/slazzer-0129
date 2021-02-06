@@ -211,6 +211,7 @@ export default class extends Component {
     this.updateState({ activeTab: val })
     this.setState({ activeTool: val })
     this.setState({ activeToolItems: true })
+    console.log("val: ", val)
   }
 
   isActiveToolbox = () => {
@@ -316,6 +317,7 @@ export default class extends Component {
   }
 
   apply = (callback) => {
+    console.log("callbakc: ", callback)
     const { activeTab, applyChanges } = this.state;
 
     applyChanges(activeTab, callback);
@@ -406,7 +408,8 @@ export default class extends Component {
       latestCanvasSize,
       activeToolItems,
       activeTool,
-      isDropped
+      isDropped,
+      applyChanges
     } = this.state;
     const { src, config, onClose, onComplete, closeOnLoad = true, t = {}, theme, /* handleReceivedImg */ } = this.props;
 
@@ -513,8 +516,6 @@ export default class extends Component {
       selectedShape,
       latestCanvasSize
     };
-    
-    console.log("selected: ", activeTool, activeTab,activeBody)
 
     const toolbarItemsProps = {
       activeTool,
@@ -528,6 +529,7 @@ export default class extends Component {
       initialZoom,
       cropDetails,
       effect,
+      applyChanges,
       onApplyEffects: this.onApplyEffects,
       onCorrectionDegree: this.onCorrectionDegree,
       updateState: this.updateState,
